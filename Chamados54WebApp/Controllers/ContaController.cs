@@ -87,10 +87,18 @@ namespace Chamados54WebApp.Controllers
                     .FirstOrDefault(e => e.Email == login.Email && e.Senha == login.Senha);
                 if (AutenticaUsuario(usuario))
                 {
-                    var returnUrl = TempData["returnUrl"].ToString();
+                    var returnUrl = TempData["returnUrl"]?.ToString();
                     if (string.IsNullOrWhiteSpace(returnUrl))
                     {
-                        return RedirectToAction("Index", "Home", new { area = "Admin" });
+                        switch(usuario.Perfil)
+                        {
+                            case PerfilUsuario.Administrador:
+                                return Redirect("/admin");
+                            case PerfilUsuario.Cliente:
+                                return Redirect("/cliente");
+                            case PerfilUsuario.Tecnico:
+                                return Redirect("/tecnico");
+                        }
                     }                    
                     return Redirect(returnUrl);
                 }

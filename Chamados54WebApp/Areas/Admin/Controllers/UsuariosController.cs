@@ -146,6 +146,13 @@ namespace Chamados54WebApp.Areas.Admin.Controllers
             {
                 //exclui usuario do banco de dados
                 bancoDados = new BancoDados();
+                Tecnico tecnico = new Tecnico() { Id=usuario.Id};    
+                bancoDados.Tecnicos.Attach(tecnico);
+                bancoDados.Tecnicos.Remove(tecnico);
+
+                Cliente cliente = new Cliente() { Id = usuario.Id };
+                bancoDados.Clientes.Attach(cliente);
+                bancoDados.Clientes.Remove(cliente);
                 bancoDados.Usuarios.Remove(usuario);
                 bancoDados.SaveChanges();
                 //volta para index
