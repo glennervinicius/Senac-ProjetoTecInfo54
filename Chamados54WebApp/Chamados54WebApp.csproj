@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.17" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.29" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.17">
       <PrivateAssets>all</PrivateAssets>
@@ -19,10 +20,8 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Cliente\Controllers\" />
-    <Folder Include="Areas\Cliente\Data\" />
-    <Folder Include="Areas\Cliente\Models\" />
-    <Folder Include="Areas\Cliente\Views\" />
+    <Folder Include="Areas\PortalCliente\Data\" />
+    <Folder Include="Areas\PortalCliente\Models\" />
     <Folder Include="Areas\Tecnico\Controllers\" />
     <Folder Include="Areas\Tecnico\Data\" />
     <Folder Include="Areas\Tecnico\Models\" />

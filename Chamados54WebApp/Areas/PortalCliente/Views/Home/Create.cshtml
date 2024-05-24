@@ -1,0 +1,50 @@
+﻿@model Chamados54WebApp.Data.Chamado
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="pt-br">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Nova solicitação</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Chamados54WebApp.styles.css" asp-append-version="true" />
+    <style>
+        body {padding: 20px;}
+    </style>
+</head>
+<body>
+<h1>Portal do Cliente</h1>
+<p>
+    <a asp-action="Index">[Lista de chamados]</a> | [<strong>Novo chamado</strong>] | <a href="/">[Sair]</a>
+</p>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Ocorrencia" class="control-label" style="font-weight: bold;">Escreva o motivo do suporte:</label><br/>
+                <textarea asp-for="Ocorrencia" class="form-control mt-3" style="height: 200px;"></textarea>
+                <span asp-validation-for="Ocorrencia" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-5">
+                <input type="submit" value="Criar chamado" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+</body>
+</html>

@@ -21,8 +21,8 @@ namespace Chamados54WebApp.Data
         //relacionamento 1-N
         [Display(Name = "Técnico")]
         [ForeignKey("Tecnico")]
-        public int IdTecnico{ get; set; }
-        public Tecnico Tecnico { get; set; }
+        public int? IdTecnico { get; set; }
+        public Tecnico? Tecnico { get; set; }
 
         [Required(ErrorMessage = "Data de solicitação obrigatória")]
         [DataType(DataType.Date)]

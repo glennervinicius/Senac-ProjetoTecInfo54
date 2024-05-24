@@ -39,7 +39,7 @@ namespace Chamados54WebApp.Migrations
                     b.Property<int>("IdCliente")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdTecnico")
+                    b.Property<int?>("IdTecnico")
                         .HasColumnType("int");
 
                     b.Property<string>("Ocorrencia")
@@ -198,8 +198,7 @@ namespace Chamados54WebApp.Migrations
                     b.HasOne("Chamados54WebApp.Data.Tecnico", "Tecnico")
                         .WithMany()
                         .HasForeignKey("IdTecnico")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Cliente");
 

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Chamados54WebApp.Migrations
 {
     /// <inheritdoc />
-    public partial class v6 : Migration
+    public partial class V7 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -88,7 +88,7 @@ namespace Chamados54WebApp.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IdCliente = table.Column<int>(type: "int", nullable: false),
-                    IdTecnico = table.Column<int>(type: "int", nullable: false),
+                    IdTecnico = table.Column<int>(type: "int", nullable: true),
                     DataSolicitacao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Ocorrencia = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
                     Problema = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),

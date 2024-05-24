@@ -1,0 +1,109 @@
+﻿@model IEnumerable<Chamados54WebApp.Data.Chamado>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="pt-br">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Portal do Cliente</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Chamados54WebApp.styles.css" asp-append-version="true" />
+    <style>
+        body {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    
+<h1>Portal do Cliente</h1>
+
+<p>
+    [<strong>Lista de chamados</strong>] | <a asp-action="Create">[Novo chamado]</a> | <a href="/">[Sair]</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Protocolo
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tecnico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataSolicitacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ocorrencia)
+            </th>
+            <th>
+                Solução
+            </th>
+            <th>
+                Situação
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>#@Html.DisplayFor(modelItem => item.Id)</td>
+            <td>
+                @if (item.Tecnico != null)
+                {
+                    @Html.DisplayFor(modelItem => item.Tecnico.Nome)
+                }
+                else
+                {
+                    <span>N/A</span>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataSolicitacao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ocorrencia)
+            </td>
+            <td>
+                @if (string.IsNullOrEmpty(item.Problema))
+                {
+                    <span>N/A</span>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.Problema)
+                }
+            </td>
+            <td>
+                @if (item.Concluido)
+                {
+                    <span>Finalizado</span>
+                }
+                else
+                {
+                    <span>Em andamento</span>
+                }
+            </td>
+            <td>
+                @if (!item.Concluido)
+                {
+                    <span><a href="javascript:;" onclick="if(confirm('Você deseja realmente encerrar esse chamado?')) window.location.href='/PortalCliente/Home/Edit/@item.Id';">[Resolver 👍]</a> | <a href="javascript:;" onclick="if(confirm('Você deseja realmente remover esse chamado?')) window.location.href='/PortalCliente/Home/Delete/@item.Id';">[Deletar 🗑️]</a></span>
+                }
+                else
+                {
+                    <span>N/A</span>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>

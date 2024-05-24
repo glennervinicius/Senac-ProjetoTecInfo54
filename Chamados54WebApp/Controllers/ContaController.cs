@@ -95,7 +95,7 @@ namespace Chamados54WebApp.Controllers
                             case PerfilUsuario.Administrador:
                                 return Redirect("/admin");
                             case PerfilUsuario.Cliente:
-                                return Redirect("/cliente");
+                                return Redirect("/PortalCliente");
                             case PerfilUsuario.Tecnico:
                                 return Redirect("/tecnico");
                         }
