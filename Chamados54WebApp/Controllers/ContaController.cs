@@ -59,7 +59,7 @@ namespace Chamados54WebApp.Controllers
                     bancoDados.SaveChanges(); //executa o comando
                 }
 
-                return RedirectToAction("Index", "Home", new { area = "Admin" });
+                return Redirect("/conta/login");
 
 
             }
@@ -73,6 +73,21 @@ namespace Chamados54WebApp.Controllers
             TempData["returnUrl"] = returnUrl;
             LoginViewModel login = new LoginViewModel();
             return View(login);
+        }
+
+        private IActionResult redirectToArea(Usuario usuario)
+        {
+            switch (usuario.Perfil)
+            {
+                case PerfilUsuario.Administrador:
+                    return Redirect("/admin");
+                case PerfilUsuario.Cliente:
+                    return Redirect("/PortalCliente");
+                case PerfilUsuario.Tecnico:
+                    return Redirect("/tecnico");
+            }
+
+            return Redirect("/conta/logout");
         }
 
         [HttpPost]
@@ -90,15 +105,7 @@ namespace Chamados54WebApp.Controllers
                     var returnUrl = TempData["returnUrl"]?.ToString();
                     if (string.IsNullOrWhiteSpace(returnUrl))
                     {
-                        switch(usuario.Perfil)
-                        {
-                            case PerfilUsuario.Administrador:
-                                return Redirect("/admin");
-                            case PerfilUsuario.Cliente:
-                                return Redirect("/PortalCliente");
-                            case PerfilUsuario.Tecnico:
-                                return Redirect("/tecnico");
-                        }
+                        return redirectToArea(usuario);
                     }                    
                     return Redirect(returnUrl);
                 }
