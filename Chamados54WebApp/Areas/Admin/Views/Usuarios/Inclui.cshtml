@@ -1,0 +1,45 @@
+﻿@using Chamados54WebApp.Data;
+@model Chamados54WebApp.Data.Usuario
+
+@{
+    ViewData["Title"] = "Inclui";
+}
+
+<div class="row">
+    <div class="offset-4 col-md-4 offset-4">
+        <h2>Cadastro do usuário</h2>
+        <h4>Inclusão</h4>
+        <hr />
+        <form asp-action="Inclui" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Senha" class="control-label"></label>
+                <input asp-for="Senha" class="form-control" />
+                <span asp-validation-for="Senha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Perfil" class="control-label"></label>
+                <select asp-for="Perfil" asp-items="@Html.GetEnumSelectList<PerfilUsuario>()" class="form-control"></select>
+                <span asp-validation-for="Perfil" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Foto" class="control-label"></label>                
+                <input type="file" name="arquivo" id="txtArquivo" class="form-control" />
+                <span asp-validation-for="Foto" class="text-danger"></span>
+            </div>
+            <div class="form-group text-center p-4">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Chamados54WebApp.Data.Usuario>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<!-- cabecalho -->
+<h1>Usuários</h1>
+<hr />
+<div class="d-flex justify-content-between">
+    <div>
+        <a asp-action="Inclui" class="btn btn-primary btn-sm">Incluir</a>
+    </div>
+    <div>
+        <form asp-action="Index">
+            <div class="form-group mb-2">
+                <label>Busca</label>
+                <input type="search" id="txtBusca" name="busca" class="form-control" />                
+            </div>            
+            <input type="submit" value="Buscar" class="btn btn-primary btn-sm" />
+        </form>
+    </div>    
+</div>
+<!-- tabela com os dados -->
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Perfil)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>            
+            <td>
+                @Html.DisplayFor(modelItem => item.Perfil)
+            </td>
+            <td>
+                <a asp-action="Altera" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Alterar</a> |
+                <a asp-action="Exibe" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Exibir</a> |
+                <a asp-action="Exclui" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Excluir</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

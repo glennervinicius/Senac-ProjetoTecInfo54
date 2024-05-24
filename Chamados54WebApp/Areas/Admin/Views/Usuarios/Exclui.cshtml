@@ -1,0 +1,35 @@
+﻿@model Chamados54WebApp.Data.Usuario
+
+@{
+    ViewData["Title"] = "Exclui";
+}
+
+<div class="row">
+    <div class="offset-3 col-md-6 offset-3">
+        <h2>Deseja excluir esse registro?</h2>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-4 text-sm-end">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt class="col-sm-4 text-sm-end">
+                @Html.DisplayNameFor(model => model.Perfil)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Perfil)
+            </dd>
+        </dl>
+        <form asp-action="Exclui">
+            <input type="hidden" asp-for="Id" />
+            <div class="text-center p-4">                
+                <input type="submit" value="Excluir" class="btn btn-danger" />
+                <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+            </div>            
+        </form>
+    </div>
+</div>
+    
+
