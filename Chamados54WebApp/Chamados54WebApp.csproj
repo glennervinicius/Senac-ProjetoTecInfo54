@@ -19,13 +19,10 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\PortalCliente\Data\" />
     <Folder Include="Areas\PortalCliente\Models\" />
-    <Folder Include="Areas\Tecnico\Controllers\" />
-    <Folder Include="Areas\Tecnico\Data\" />
-    <Folder Include="Areas\Tecnico\Models\" />
-    <Folder Include="Areas\Tecnico\Views\" />
+    <Folder Include="Areas\PortalTecnico\Data\" />
+    <Folder Include="Areas\PortalTecnico\Models\" />
     <Folder Include="wwwroot\arquivos\" />
   </ItemGroup>
 

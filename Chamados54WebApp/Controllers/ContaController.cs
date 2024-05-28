@@ -80,11 +80,11 @@ namespace Chamados54WebApp.Controllers
             switch (usuario.Perfil)
             {
                 case PerfilUsuario.Administrador:
-                    return Redirect("/admin");
+                    return Redirect("/Admin");
                 case PerfilUsuario.Cliente:
                     return Redirect("/PortalCliente");
                 case PerfilUsuario.Tecnico:
-                    return Redirect("/tecnico");
+                    return Redirect("/PortalTecnico");
             }
 
             return Redirect("/conta/logout");

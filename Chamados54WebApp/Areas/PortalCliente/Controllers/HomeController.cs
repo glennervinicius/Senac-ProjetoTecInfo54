@@ -30,7 +30,12 @@ namespace Chamados54WebApp.Areas.PortalCliente.Controllers
         public async Task<IActionResult> Index()
         {
             var id = getIdCliente();
-            var bancoDados = _context.Chamados.Where(c => c.IdCliente == id).Include(c => c.Cliente).Include(c => c.Tecnico);
+            var bancoDados = _context.Chamados
+                .Where(c => c.IdCliente == id)
+                .Include(c => c.Cliente)
+                .Include(c => c.Tecnico)
+                .OrderByDescending(o => o.Id);
+
             return View(await bancoDados.ToListAsync());
         }
 
@@ -117,6 +122,18 @@ namespace Chamados54WebApp.Areas.PortalCliente.Controllers
             }
 
             await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> NaoResolvido(int id)
+        {
+            var chamado = _context.Chamados.First(w => w.Id == id);
+            chamado.Ocorrencia = chamado.Ocorrencia + "; [Atualização "+DateTime.Now.ToShortDateString()+"] > " + Request.Query["texto"];
+            chamado.Problema = null;
+
+            _context.Update(chamado);
+            _context.SaveChanges();
+
             return RedirectToAction(nameof(Index));
         }
 

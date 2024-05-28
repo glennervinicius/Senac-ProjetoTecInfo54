@@ -1,6 +1,7 @@
 ﻿using Chamados54WebApp.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Chamados54WebApp.Areas.Admin.Controllers
 {
@@ -83,7 +84,7 @@ namespace Chamados54WebApp.Areas.Admin.Controllers
             if (usuario == null)
             {
                 return NotFound();
-            }            
+            }
             return View(usuario);
         }
 
@@ -94,7 +95,7 @@ namespace Chamados54WebApp.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 //verifica se existe um arquivo
-                if (arquivo !=null)
+                if (arquivo != null)
                 {
                     //exclui o arquivo antigo
                     ExcluiArquivo(usuario.Foto);
@@ -105,7 +106,7 @@ namespace Chamados54WebApp.Areas.Admin.Controllers
                 //altera o usuario no banco de dados
                 bancoDados = new BancoDados();
                 bancoDados.Usuarios.Update(usuario);
-                bancoDados.SaveChanges(); 
+                bancoDados.SaveChanges();
                 //volta para index
                 return RedirectToAction("Index");
             }
@@ -145,16 +146,49 @@ namespace Chamados54WebApp.Areas.Admin.Controllers
             if (usuario.Id > 0)
             {
                 //exclui usuario do banco de dados
-                bancoDados = new BancoDados();
-                Tecnico tecnico = new Tecnico() { Id=usuario.Id};    
-                bancoDados.Tecnicos.Attach(tecnico);
-                bancoDados.Tecnicos.Remove(tecnico);
+                using (var db = new BancoDados())
+                {
+                    var usuarioDB = db.Usuarios.Where(w => w.Id == usuario.Id)
+                        .Include(a => a.Cliente)
+                        .Include(a => a.Tecnico)
+                        .First();
 
-                Cliente cliente = new Cliente() { Id = usuario.Id };
-                bancoDados.Clientes.Attach(cliente);
-                bancoDados.Clientes.Remove(cliente);
-                bancoDados.Usuarios.Remove(usuario);
-                bancoDados.SaveChanges();
+                    var ticketsTecnico = db.Chamados.Where(c => usuarioDB.Tecnico != null && c.IdTecnico == usuario.Id)
+                    .ToList();
+                    foreach (var item in ticketsTecnico)
+                    {
+                        item.Tecnico = null;
+                        db.Chamados.Update(item);
+                    };
+
+                    var ticketsClienteApagar = db.Chamados.Where(c => usuarioDB.Cliente != null && c.IdCliente == usuario.Id)
+                        .ToList();
+
+                    foreach (var item in ticketsClienteApagar)
+                    {
+                        db.Chamados.Remove(item);
+                    }
+                    db.SaveChanges();
+                }
+
+                using (var db = new BancoDados())
+                {
+                    var tec = db.Tecnicos.Where(w => w.Id == usuario.Id).FirstOrDefault();
+                    var cli = db.Clientes.Where(w => w.Id == usuario.Id).FirstOrDefault();
+                    var usr = db.Usuarios.Where(w => w.Id == usuario.Id).FirstOrDefault();
+
+                    if (tec != null && tec.Id > 0)
+                        db.Tecnicos.Remove(tec);
+                    if (cli != null && cli.Id > 0)
+                        db.Clientes.Remove(cli);
+                    if (usr != null && usr.Id > 0)
+                        db.Usuarios.Remove(usr);
+
+                    db.SaveChanges();
+                }
+
+
+
                 //volta para index
                 return RedirectToAction("Index");
             }

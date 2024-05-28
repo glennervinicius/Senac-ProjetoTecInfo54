@@ -8,9 +8,6 @@
 <hr />
 <div class="d-flex justify-content-between">
     <div>
-        <a asp-action="Inclui" class="btn btn-primary btn-sm">Incluir</a>
-    </div>
-    <div>
         <form asp-action="Index">
             <div class="form-group mb-2">
                 <label>Busca</label>
@@ -43,7 +40,6 @@
                 @Html.DisplayFor(modelItem => item.Perfil)
             </td>
             <td>
-                <a asp-action="Altera" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Alterar</a> |
                 <a asp-action="Exibe" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Exibir</a> |
                 <a asp-action="Exclui" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Excluir</a>
             </td>

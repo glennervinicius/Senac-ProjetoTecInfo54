@@ -1,7 +1,76 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using Chamados54WebApp.Areas.Admin.Models;
+@model Chamados54WebApp.Areas.Admin.Models.Dashboard
 
-<h1>Área administrativa</h1>
+<h1>Cadastros</h1>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    <div class="col">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h3>Clientes</h3>
+                <small>Quantidade de clientes cadastrados.</small>
+
+                <div style="font-size: 60px; color: green; width: 100%">@Model.CadastroQuantidadeCliente</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h3>Tecnicos</h3>
+                <small>Quantidade de tecnicos cadastrados.</small>
+
+                <div style="font-size: 60px; color: green; width: 100%">@Model.CadastroQuantidadeTecnico</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2 style="margin-top: 100px">Chamados</h2>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+    <div class="col">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h3>Aguardando Aceite Técnico</h3>
+                <small>Quantidade de chamados aguardando um técnico aceitar.</small>
+
+                <div style="font-size: 60px; color: green; width: 100%">@Model.ChamadoAguardandoAceiteTecnico</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h3>Aguardando Solução Técnico</h3>
+                <small>Quantidade de chamados aguardando técnico responder.</small>
+
+                <div style="font-size: 60px; color: green; width: 100%">@Model.ChamadoAguardandoTecnico</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h3>Aguardando Cliente</h3>
+                <small>Quantidade de chamados aguardando cliente.</small>
+
+                <div style="font-size: 60px; color: green; width: 100%">@Model.ChamadoAguardandoCliente</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <h3>Resolvido</h3>
+                <small>Quantidade de chamados resolvidos.</small>
+
+                <div style="font-size: 60px; color: green; width: 100%">@Model.ChamadoFinalizado</div>
+            </div>
+        </div>
+    </div>
+</div>

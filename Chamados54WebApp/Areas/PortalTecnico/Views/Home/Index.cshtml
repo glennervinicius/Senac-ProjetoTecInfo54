@@ -10,7 +10,7 @@
 <html lang="pt-br">
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Portal do Cliente</title>
+    <title>Portal do Técnico</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Chamados54WebApp.styles.css" asp-append-version="true" />
@@ -22,10 +22,10 @@
 </head>
 <body>
 
-    <h1>Portal do Cliente</h1>
+    <h1>Portal do Técnico</h1>
 
     <p>
-        [<strong>Lista de chamados</strong>] | <a asp-action="Create">[Novo chamado]</a> | <a href="/conta/logout">[Sair]</a>
+        [<strong>Área de Trabalho</strong>] | <a href="/conta/logout">[Sair]</a>
     </p>
     <table class="table">
         <thead>
@@ -34,7 +34,7 @@
                     Protocolo
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Tecnico)
+                    @Html.DisplayNameFor(model => model.Cliente)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.DataSolicitacao)
@@ -57,14 +57,7 @@
                 <tr>
                     <td>#@Html.DisplayFor(modelItem => item.Id)</td>
                     <td>
-                        @if (item.Tecnico != null)
-                        {
-                            @Html.DisplayFor(modelItem => item.Tecnico.Nome)
-                        }
-                        else
-                        {
-                            <span>N/A</span>
-                        }
+                        @Html.DisplayFor(modelItem => item.Cliente.Nome)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.DataSolicitacao)
@@ -91,10 +84,6 @@
                         {
                             <span>Aguardando Técnico</span>
                         }
-                        else if (!string.IsNullOrEmpty(item.Problema))
-                        {
-                            <span>Respondido</span>
-                        }
                         else
                         {
                             <span>Em andamento</span>
@@ -103,21 +92,20 @@
                     <td>
                         @if (!item.Concluido)
                         {
-                            @if (!string.IsNullOrEmpty(item.Problema))
+                            @if (item.Tecnico == null)
                             {
-                                <span>
-                                    <a href="javascript:;" onclick="Resolver(@item.Id)">[Resolvido 👍]</a> | <a href="javascript:;" onclick="NaoResolvido(@item.Id)">
-                                        [Não resolvido 👎🏻]
-                                    </a>
-                                </span>
+                                <span><a href="javascript:;" onclick="if(confirm('Você deseja realmente assumir esse atendimento?')) window.location.href='/PortalTecnico/Home/Aceitar/@item.Id';">[Aceitar 👍]</a></span>
                             }
-                            else if(item.Tecnico == null)
+                            else if (!string.IsNullOrEmpty(item.Problema))
                             {
-                                <span><a href="javascript:;" onclick="Remover(@item.Id)">[Deletar 🗑️]</a></span>
+                                <span>Aguardando cliente.</span>
                             }
                             else
                             {
-                                <span>N/A</span>
+                                <span>
+                                    <a href="javascript:;" onclick="EnviarSolucaoProblema(@item.Id)">[Enviar Solução ✅]</a>
+                                    | <a href="javascript:;" onclick="if(confirm('Você deseja realmente abandonar esse atendimento?')) window.location.href='/PortalTecnico/Home/Abandonar/@item.Id';">[Abandonar ❌]</a>
+                                </span>
                             }
                         }
                         else
@@ -131,22 +119,13 @@
     </table>
 
     <script>
-        function Resolver(id) {
-            if (confirm("Você deseja realmente encerrar esse chamado?")) {
-                window.location.href = '/PortalCliente/Home/Edit/' + id;
-            }
-        }
+        function EnviarSolucaoProblema(id) {
+            const solucao = prompt('Qual a solução que você deseja enviar ao cliente?', '');
 
-        function Remover(id) {
-            if (confirm("Deseja remover o atendimento?")) {
-                window.location.href = '/PortalCliente/Home/Delete/' + id;
-            }
-        }
-
-        function NaoResolvido(id) {
-            const motivo = prompt("Escreva o motivo de não ter funcionado: ", "");
-            if(motivo && confirm("Confirma o envio do motivo abaixo?\n\nMotivo: " + motivo)) {
-                window.location.href = '/PortalCliente/Home/NaoResolvido/' + id + '?texto=' + encodeURIComponent(motivo);
+            if (solucao) {
+                if(confirm('Você confirma o envio da solução abaixo?\n\nSolução: ' + solucao)) {
+                    window.location.href = '/PortalTecnico/Home/Solucao/' + id + '?texto=' + encodeURIComponent(solucao);
+                }
             }
         }
     </script>
